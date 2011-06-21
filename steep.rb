@@ -48,10 +48,11 @@ class Steeper
         File.open(File.join(File.dirname(__FILE__), ConfigFile), "w") do |f|
           f.write YAML.dump(DefaultConfigData)
         end
-        @config = DefaultConfigData
       else
-        puts "Fine, be that way!"; exit 2
+        puts "Fine, be that way!"
       end
+      @config = DefaultConfigData
+      puts "Using defaults for first steeping of green tea"
     end
     
     
