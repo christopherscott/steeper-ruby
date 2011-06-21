@@ -1,9 +1,5 @@
+---
 steepcounter: 0
-
-# teas: 
-# temp => recommended temp in Farenheit
-# duration => array of times, in seconds
-
 teas:
     white: 
         temp: 150-160

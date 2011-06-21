@@ -3,9 +3,11 @@
 # For timing the steeping of my tea
 
 require 'optparse'
+require 'yaml'
 
 class Steeper
   
+  ConfigFile = "steep.yml"
   ColumnWidth = 60
   ColorMap = [
     "\033[0;37;40m",
@@ -15,31 +17,50 @@ class Steeper
     "\033[1;32;40m",
     "\033[0;32;40m"
     ]
-  DoneMessage = "\t\t        {\n\t\t     {   }\n\t\t      }_{ __{\n\t\t   .-{   }   }-.\n\t\t  (   }     {   )\n\t\t  |`-.._____..-'|\n\t\t  |             ;--.\n\t\t  |            (__  \\\n\t\t  |             | )  )\n\t\t  |             |/  /\n\t\t  |             /  /\n\t\t  |            (  /\n\t\t  \\             y'\n\t\t   `-.._____..-'\n"
+  DoneMessage = "\t\t        {\n\t\t     {   }\n\t\t      }_{ __{\n\t\t   .-{   }   }-.\n\t\t  (   }     {   )\n\t\t  |`-.._____..-'|\n\t\t  |             ;--.\n\t\t  |            (__  \\\n\t\t  |             | )  )\n\t\t  |             |/  /\n\t\t  |             /  /\n\t\t  |            (  /\n\t\t  \\             y'\n\t\t   `-.._____..-'\n"  
+  DefaultConfigData = {
+    "steepcounter" => 0,
+    "teas" => { "green" => { "duration" => [60, 60, 90, 105] } } 
+    }
   
   def initialize
-    
-    # TODO: change to use ancillary file, steep.yml
-    # for configurations, times, etc...
-    # also, this will check for past steepings to
-    # keep track for multiple steepings
+
     @steep_duration = 2 # in seconds
     
     # parsing command line options
     @options = {}
     optparse = OptionParser.new do |opts|
       opts.banner = "Usage: steep.rb [options]"
-      opts.on "-R", "--reset", "Reset steeping count" do |r|
+      opts.on "-r", "--reset", "Reset steeping count" do |r|
         @options[:reset] = true
       end
+      opts.on "-t", "--type TEATYPE", "Type of tea (based on config file #{ConfigFile})" do |t|
+        @options[:type] = t || "green"
+      end
     end
+    
+    if File.readable? ConfigFile
+      @config = YAML::load_file(ConfigFile)
+    else
+      puts "Configuration file #{ConfigFile} missing."
+      print "Create config file? (y or n): "
+      unless gets.chomp =~ /[nN0]/
+        File.open(File.join(File.dirname(__FILE__), ConfigFile), "w") do |f|
+          f.write YAML.dump(DefaultConfigData)
+        end
+        @config = DefaultConfigData
+      else
+        puts "Fine, be that way!"; exit 2
+      end
+    end
+    
     
   end
   
   def steep
     
     start_time = Time.now.to_f
-    stop_time = Time.now.to_f + @steep_duration
+    stop_time = start_time + @steep_duration
     
     until Time.now.to_f > stop_time
       percent =  (Time.now.to_f - start_time) / @steep_duration.to_f
