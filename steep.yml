@@ -1,0 +1,22 @@
+steepcounter: 0
+
+# teas: 
+# temp => recommended temp in Farenheit
+# duration => array of times, in seconds
+
+teas:
+    white: 
+        temp: 150-160
+        duration: [60, 60, 90, 105]
+    green:
+        temp: 170-810
+        duration: [60, 60, 90, 105]
+    oolong:
+        temp: 190-195
+        duration: [30, 30, 45, 45]
+    black:
+        temp: 212
+        duration: [60, 60, 90, 90]
+    puerh:
+        temp: 212
+        duration: [30, 30, 45, 60]

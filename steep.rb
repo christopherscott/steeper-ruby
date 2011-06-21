@@ -26,7 +26,7 @@ class Steeper
     # also, this will check for past steepings to
     # keep track for multiple steepings
     @steep_duration = 55 # in seconds
-        
+    
     # parsing command line options
     @options = {}
     optparse = OptionParser.new do |opts|
@@ -40,11 +40,11 @@ class Steeper
   
   def steep
     
-    start_time = Time.now
+    start_time = Time.now.to_f
     stop_time = Time.now.to_f + @steep_duration
     
     until Time.now.to_f > stop_time
-      percent =  (Time.now.to_f - start_time.to_f) / @steep_duration.to_f
+      percent =  (Time.now.to_f - start_time) / @steep_duration.to_f
       print "#{"#{ColorMap[percent * 6]}#"*(percent * 50)}\r"
       STDOUT.flush
     end
@@ -56,6 +56,6 @@ class Steeper
 end
 
 
-if $0 == __FILE__
+if __FILE__ == $0
   Steeper.new.steep
 end
