@@ -6,7 +6,7 @@ teas:
         duration: [60, 60, 90, 105]
     green:
         temp: 170-810
-        duration: [60, 60, 90, 105]
+        duration: [45, 60, 90, 105]
     oolong:
         temp: 190-195
         duration: [30, 30, 45, 45]
