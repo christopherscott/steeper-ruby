@@ -1,7 +1,4 @@
 #!/usr/bin/env ruby
-
-# For timing the steeping of my tea
-
 require 'optparse'
 require 'yaml'
 require './helper'
