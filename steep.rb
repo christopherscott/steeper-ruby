@@ -17,7 +17,7 @@ class Steeper
     "\033[1;32;40m",
     "\033[0;32;40m"
     ]
-  DoneMessage = "\t\t        {\n\t\t     {   }\n\t\t      }_{ __{\n\t\t   .-{   }   }-.\n\t\t  (   }     {   )\n\t\t  |`-.._____..-'|\n\t\t  |             ;--.\n\t\t  |            (__  \\\n\t\t  |             | )  )\n\t\t  |             |/  /\n\t\t  |             /  /\n\t\t  |            (  /\n\t\t  \\             y'\n\t\t   `-.._____..-'\n"  
+  DoneMessage = IO.read("./teabag.txt")  
   DefaultConfigData = {
     "steepcounter" => 0,
     "teas" => { "green" => { "duration" => [60, 60, 90, 105] } } 
@@ -25,6 +25,9 @@ class Steeper
   
   def initialize
     
+    print DoneMessage
+    exit
+
     # not sure if we need the object returned from optparse or not
     @optparse = parse_command_line_options
     @tea_type ||= "green"
@@ -107,6 +110,7 @@ class Steeper
       STDOUT.flush
     end
     puts "#{" "*ColumnWidth}\n#{"\007"*3}#{DoneMessage}\033[0m\ndone steeping"
+
     update_config_file
     puts "updating config file"
     
